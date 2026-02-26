@@ -55,7 +55,7 @@ jobs:
           done <<< "${{ steps.changes.outputs.stacks }}"
 
       - name: Notify Discord
-        if: always() && secrets.DISCORD_WEBHOOK_URL != ''
+        if: always()
         env:
           WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           STACKS: ${{ steps.changes.outputs.stacks }}
