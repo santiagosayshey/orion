@@ -5,26 +5,39 @@
     "docker:enableMajor"
   ],
   "timezone": "Australia/Adelaide",
-  "schedule": ["before 4am"],
+  "schedule": [
+    "before 4am"
+  ],
   "docker-compose": {
-    "fileMatch": ["(^|/)compose\\.ya?ml$"]
+    "managerFilePatterns": [
+      "/(^|/)compose\\.ya?ml$/"
+    ]
   },
   "packageRules": [
     {
       "description": "Auto-merge patch updates",
-      "matchUpdateTypes": ["patch", "digest"],
+      "matchUpdateTypes": [
+        "patch",
+        "digest"
+      ],
       "automerge": true
     },
     {
       "description": "Minor updates need approval",
-      "matchUpdateTypes": ["minor"],
+      "matchUpdateTypes": [
+        "minor"
+      ],
       "automerge": false
     },
     {
       "description": "Major updates need approval",
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
-      "labels": ["major-update"]
+      "labels": [
+        "major-update"
+      ]
     }
   ]
 }
