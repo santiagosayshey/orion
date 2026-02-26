@@ -1,0 +1,17 @@
+# Media
+
+The media automation stack — indexers, downloaders, and the arr suite.
+
+## Services
+
+### Prowlarr
+
+Indexer manager that syncs with Radarr, Sonarr, and other arr apps. Configure indexers once here and they propagate everywhere.
+
+- **Port:** 9696
+- **Config:** `/mnt/user/appdata/prowlarr`
+- **Web UI:** `http://orion:9696`
+
+### Theme
+
+All services in this stack use [theme.park](https://theme-park.dev) with the **nord** theme via LinuxServer Docker Mods.
