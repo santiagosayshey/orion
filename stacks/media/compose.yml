@@ -13,3 +13,6 @@ services:
       - TZ=Australia/Adelaide
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
       - TP_THEME=nord
+    labels:
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/refs/heads/develop/Logo/1024.png"
+        net.unraid.docker.webui: "http://[IP]:[PORT:9696]"
