@@ -1,0 +1,19 @@
+services:
+  arm:
+    image: automaticrippingmachine/automatic-ripping-machine:2.6.46
+    container_name: arm
+    restart: always
+    privileged: true
+    ports:
+      - "8095:8080"
+    env_file:
+      - .env
+    volumes:
+      - /mnt/user/appdata/arm:/home/arm
+      - /mnt/user/appdata/arm/music:/home/arm/Music
+      - /mnt/user/appdata/arm/logs:/home/arm/logs
+      - /mnt/user/appdata/arm/config:/etc/arm/config
+      - /mnt/user/media/arm:/home/arm/media
+    devices:
+      - /dev/sr0:/dev/sr0
+      - /dev/dri:/dev/dri
