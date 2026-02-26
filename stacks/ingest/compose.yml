@@ -6,8 +6,10 @@ services:
     privileged: true
     ports:
       - "8095:8080"
-    env_file:
-      - .env
+    environment:
+      - ARM_UID=1000
+      - ARM_GID=1000
+      - TZ=Australia/Adelaide
     volumes:
       - /mnt/user/appdata/arm:/home/arm
       - /mnt/user/appdata/arm/music:/home/arm/Music
