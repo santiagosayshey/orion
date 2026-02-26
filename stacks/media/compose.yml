@@ -149,6 +149,7 @@ services:
       - "7476:7476"
     volumes:
       - /mnt/user/appdata/qui:/config
+      - /mnt/user/media:/media
     environment:
       - TZ=Australia/Adelaide
     labels:
