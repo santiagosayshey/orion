@@ -156,3 +156,37 @@ services:
     labels:
         net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
         net.unraid.docker.webui: "http://[IP]:[PORT:7476]"
+
+  plex:
+    image: lscr.io/linuxserver/plex:1.43.0.10492-121068a07-ls294
+    container_name: plex
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /mnt/user/appdata/plex:/config
+      - /mnt/user/media:/media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - VERSION=docker
+    labels:
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png"
+        net.unraid.docker.webui: "http://[IP]:32400/web"
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:10.11.6
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+    volumes:
+      - /mnt/user/appdata/jellyfin:/config
+      - /mnt/user/media:/media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+    labels:
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/jellyfin/jellyfin-ux/master/branding/SVG/icon-transparent.svg"
+        net.unraid.docker.webui: "http://[IP]:[PORT:8096]"
