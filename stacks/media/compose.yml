@@ -188,5 +188,5 @@ services:
       - PGID=100
       - TZ=Australia/Adelaide
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/jellyfin/jellyfin-ux/master/branding/SVG/icon-transparent.svg"
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/jellyfin-logo.png"
         net.unraid.docker.webui: "http://[IP]:[PORT:8096]"
