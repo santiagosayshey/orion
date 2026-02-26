@@ -127,8 +127,7 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8080"
-      - "6881:6881"
-      - "6881:6881/udp"
+      - "50413:50413"
     volumes:
       - /mnt/user/appdata/qbittorrent:/config
       - /mnt/user/media/downloads:/downloads
