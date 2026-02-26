@@ -1,25 +1,45 @@
-# Ingest
+# Ingest Stack
 
-Physical media ripping and encoding pipeline.
+Lightweight CLI ripping and encoding container for optical media.
 
-## Services
+## Tools
 
-- **ARM** — Automatic Ripping Machine. Detects disc insertion, rips with MakeMKV, encodes with HandBrake via QuickSync H.265, renames, and drops in Radarr import folder.
+- **MakeMKV** (`makemkvcon`) — rips Blu-ray/DVD to lossless MKV
+- **HandBrakeCLI** — encodes with H.265 via Intel QSV hardware acceleration
 
-## Hardware
+## Usage
 
-- LG GP60NB50 USB DVD writer passed through at `/dev/sr0`
-- DVD/CD only, no Blu-ray
-- Intel i3-14100 iGPU (UHD 730) passed through at `/dev/dri` for QuickSync H.265 encoding
-- USB connected — device path may change if unplugged
+```bash
+# Enter the container
+docker exec -it ripper bash
 
-## Notes
+# Rip entire disc
+makemkvcon mkv disc:0 all /data/rips
 
-- ARM web UI at port 8095
-- Media output lands in `/mnt/user/media/arm`
-- DVD rips are MPEG-2 source, encoding to H.265 recommended to save space
+# Encode with QSV H.265
+HandBrakeCLI -i /data/rips/movie.mkv -o /data/encodes/movie.mkv -e qsv_h265 -q 22 --encoder-preset balanced
+```
 
-## TODO
+## Manual Import
 
-- [ ] Configure HandBrake H.265 QSV preset
-- [ ] Test disc detection in container
+After encoding, move files to the appropriate download folder for Sonarr/Radarr:
+
+```bash
+mv /data/encodes/movie.mkv /data/downloads/movies/
+mv /data/encodes/show.mkv /data/downloads/tv/
+```
+
+Then trigger a manual import in Sonarr/Radarr pointing at the downloads folder.
+
+## Volumes
+
+| Container Path | Host Path | Purpose |
+|---|---|---|
+| `/data` | `/mnt/user/media` | Entire media share |
+
+## Devices
+
+| Device | Purpose |
+|---|---|
+| `/dev/sr0` | Optical drive |
+| `/dev/dri` | Intel QSV hardware encoding |

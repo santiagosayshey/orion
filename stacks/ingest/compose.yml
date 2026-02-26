@@ -1,23 +1,13 @@
 services:
-  arm:
-    image: automaticrippingmachine/automatic-ripping-machine:2.22.1
-    container_name: arm
-    restart: always
+  ripper:
+    build: .
+    container_name: ripper
+    restart: unless-stopped
     privileged: true
-    ports:
-      - "8095:8080"
-    environment:
-      - ARM_UID=99
-      - ARM_GID=100
-      - TZ=Australia/Adelaide
     volumes:
-      - /mnt/user/appdata/arm:/home/arm
-      - /mnt/user/appdata/arm/music:/home/arm/Music
-      - /mnt/user/appdata/arm/logs:/home/arm/logs
-      - /mnt/user/appdata/arm/config:/etc/arm/config
-      - /mnt/user/media/arm:/home/arm/media
+      - /mnt/user/media:/data
     devices:
       - /dev/sr0:/dev/sr0
       - /dev/dri:/dev/dri
     labels:
-      net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/makemkv-icon.png"
