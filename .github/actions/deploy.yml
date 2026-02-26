@@ -31,24 +31,31 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
 
-      - name: Deploy changed stacks
+      - name: Setup SSH
         env:
           UNRAID_HOST: ${{ secrets.UNRAID_TAILSCALE_HOST }}
-          COMPOSE_DIR: ${{ secrets.COMPOSE_PROJECT_DIR }}
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H $UNRAID_HOST >> ~/.ssh/known_hosts 2>/dev/null
 
+      - name: Sync and deploy changed stacks
+        env:
+          UNRAID_HOST: ${{ secrets.UNRAID_TAILSCALE_HOST }}
+          COMPOSE_DIR: ${{ secrets.COMPOSE_PROJECT_DIR }}
+        run: |
           while IFS= read -r stack; do
             [ -z "$stack" ] && continue
+            echo "Syncing: $stack"
+            ssh root@$UNRAID_HOST "mkdir -p ${COMPOSE_DIR}/${stack}"
+            scp -r ${stack}/* root@$UNRAID_HOST:${COMPOSE_DIR}/${stack}/
             echo "Deploying: $stack"
             ssh root@$UNRAID_HOST "cd ${COMPOSE_DIR}/${stack} && docker compose pull && docker compose up -d --remove-orphans"
           done <<< "${{ steps.changes.outputs.stacks }}"
 
       - name: Notify Discord
-        if: always() && vars.DISCORD_WEBHOOK_URL != '' || secrets.DISCORD_WEBHOOK_URL != ''
+        if: always() && secrets.DISCORD_WEBHOOK_URL != ''
         env:
           WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           STACKS: ${{ steps.changes.outputs.stacks }}
@@ -72,7 +79,6 @@ jobs:
           SHORT_SHA="${COMMIT_SHA:0:7}"
           AVATAR_URL="https://avatars.githubusercontent.com/${AUTHOR_NAME}"
 
-          # Escape commit message for JSON
           SAFE_MSG=$(echo "$COMMIT_MSG" | head -1 | sed 's/"/\\"/g')
 
           curl -s -H "Content-Type: application/json" \
