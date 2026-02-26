@@ -139,7 +139,7 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:qbittorrent
       - TP_THEME=nord
     labels:
-        net.unraid.docker.icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/New_qBittorrent_Logo.svg/960px-New_qBittorrent_Logo.svg.png"
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/binhex/docker-templates/master/binhex/images/qbittorrent-icon.png"
         net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
 
   qui:
