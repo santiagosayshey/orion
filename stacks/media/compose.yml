@@ -139,7 +139,7 @@ services:
     labels:
         net.unraid.docker.icon: "https://upload.wikimedia.org/wikipedia/commons/6/66/New_qBittorrent_Logo.svg"
         net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
-
+  # no need for qbm anymore
   qui:
     image: ghcr.io/autobrr/qui:v1.14.1
     container_name: qui

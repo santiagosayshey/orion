@@ -47,11 +47,16 @@ jobs:
         run: |
           while IFS= read -r stack; do
             [ -z "$stack" ] && continue
-            echo "Syncing: $stack"
-            ssh root@$UNRAID_HOST "mkdir -p ${COMPOSE_DIR}/${stack}"
-            scp -r ${stack}/* root@$UNRAID_HOST:${COMPOSE_DIR}/${stack}/
-            echo "Deploying: $stack"
-            ssh root@$UNRAID_HOST "cd ${COMPOSE_DIR}/${stack} && docker compose pull && docker compose up -d --remove-orphans"
+            if [ -d "$stack" ]; then
+              echo "Syncing: $stack"
+              ssh root@$UNRAID_HOST "mkdir -p ${COMPOSE_DIR}/${stack}"
+              scp -r ${stack}/* root@$UNRAID_HOST:${COMPOSE_DIR}/${stack}/
+              echo "Deploying: $stack"
+              ssh root@$UNRAID_HOST "cd ${COMPOSE_DIR}/${stack} && docker compose pull && docker compose up -d --remove-orphans"
+            else
+              echo "Removing: $stack"
+              ssh root@$UNRAID_HOST "cd ${COMPOSE_DIR}/${stack} && docker compose down --remove-orphans && rm -rf ${COMPOSE_DIR}/${stack}" || true
+            fi
           done <<< "${{ steps.changes.outputs.stacks }}"
 
       - name: Notify Discord
