@@ -40,6 +40,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H $UNRAID_HOST >> ~/.ssh/known_hosts 2>/dev/null || true
 
+      - name: Login to GHCR on remote
+        env:
+          UNRAID_HOST: ${{ secrets.UNRAID_TAILSCALE_HOST }}
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          ssh root@$UNRAID_HOST "echo ${GHCR_TOKEN} | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
+
       - name: Sync and deploy changed stacks
         env:
           UNRAID_HOST: ${{ secrets.UNRAID_TAILSCALE_HOST }}
