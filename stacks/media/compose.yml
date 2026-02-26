@@ -162,6 +162,8 @@ services:
     container_name: plex
     restart: unless-stopped
     network_mode: host
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - /mnt/user/appdata/plex:/config
       - /mnt/user/media:/media
@@ -178,6 +180,8 @@ services:
     image: lscr.io/linuxserver/jellyfin:10.11.6
     container_name: jellyfin
     restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri
     ports:
       - "8096:8096"
     volumes:
