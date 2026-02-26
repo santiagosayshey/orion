@@ -17,3 +17,5 @@ services:
     devices:
       - /dev/sr0:/dev/sr0
       - /dev/dri:/dev/dri
+    labels:
+      net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
