@@ -1,0 +1,8 @@
+# Secrets - these live on the server only
+.env
+*.env
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
