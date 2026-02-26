@@ -7,8 +7,8 @@ services:
     ports:
       - "8095:8080"
     environment:
-      - ARM_UID=1000
-      - ARM_GID=1000
+      - ARM_UID=99
+      - ARM_GID=100
       - TZ=Australia/Adelaide
     volumes:
       - /mnt/user/appdata/arm:/home/arm
