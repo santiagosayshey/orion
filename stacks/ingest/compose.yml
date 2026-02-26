@@ -8,6 +8,7 @@ services:
       - /mnt/user/media:/data
     devices:
       - /dev/sr0:/dev/sr0
+      - /dev/sg5:/dev/sg5
       - /dev/dri:/dev/dri
     labels:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/jlesage/docker-templates/master/jlesage/images/makemkv-icon.png"
