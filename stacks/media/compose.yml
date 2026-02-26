@@ -1,4 +1,3 @@
-# media stack
 services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:1.28.2.4885-ls86
