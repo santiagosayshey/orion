@@ -130,7 +130,7 @@ services:
       - "50413:50413"
     volumes:
       - /mnt/user/appdata/qbittorrent:/config
-      - /mnt/user/media/downloads:/downloads
+      - /mnt/user/media:/media
     environment:
       - PUID=99
       - PGID=100
