@@ -1,6 +1,6 @@
 services:
   arm:
-    image: automaticrippingmachine/automatic-ripping-machine:2.6.46
+    image: automaticrippingmachine/automatic-ripping-machine:2.22.1
     container_name: arm
     restart: always
     privileged: true
