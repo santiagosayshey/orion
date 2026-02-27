@@ -55,25 +55,6 @@ services:
         net.unraid.docker.icon: "https://raw.githubusercontent.com/Sonarr/Sonarr/refs/heads/develop/Logo/1024.png"
         net.unraid.docker.webui: "http://[IP]:[PORT:8989]"
 
-  lidarr:
-    image: lscr.io/linuxserver/lidarr:3.1.0.4875-ls20
-    container_name: lidarr
-    restart: unless-stopped
-    ports:
-      - "8686:8686"
-    volumes:
-      - /mnt/user/appdata/lidarr:/config
-      - /mnt/user/media:/media
-    environment:
-      - PUID=99
-      - PGID=100
-      - TZ=Australia/Adelaide
-      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:lidarr
-      - TP_THEME=nord
-    labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/Lidarr/Lidarr/refs/heads/develop/Logo/1024.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:8686]"
-
   profilarr:
     image: ghcr.io/dictionarry-hub/profilarr:develop
     container_name: profilarr
