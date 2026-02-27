@@ -158,6 +158,22 @@ services:
         net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
         net.unraid.docker.webui: "http://[IP]:[PORT:7476]"
 
+  navidrome:
+    image: deluan/navidrome:0.60.3
+    container_name: navidrome
+    restart: unless-stopped
+    ports:
+      - "4533:4533"
+    volumes:
+      - /mnt/user/appdata/navidrome:/data
+      - /mnt/user/media/library/music:/music:ro
+    environment:
+      - ND_SCANSCHEDULE=15m
+      - TZ=Australia/Adelaide
+    labels:
+        net.unraid.docker.icon: "https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png"
+        net.unraid.docker.webui: "http://[IP]:[PORT:4533]"
+
   plex:
     image: lscr.io/linuxserver/plex:1.43.0.10492-121068a07-ls294
     container_name: plex
