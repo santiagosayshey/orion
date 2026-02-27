@@ -132,6 +132,7 @@ services:
     volumes:
       - /mnt/user/appdata/qbittorrent:/config
       - /mnt/user/media:/media
+      - ./scripts:/scripts:ro
     environment:
       - PUID=99
       - PGID=100
