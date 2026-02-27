@@ -30,6 +30,15 @@ TV series collection manager. Integrates with Prowlarr for indexers and your dow
 - **Media:** `/mnt/user/media`
 - **Web UI:** `http://orion:8989`
 
+### Lidarr
+
+Music collection manager. Integrates with Prowlarr for indexers and your download client for fetching. Uses MusicBrainz for metadata (note: metadata API has had stability issues historically).
+
+- **Port:** 8686
+- **Config:** `/mnt/user/appdata/lidarr`
+- **Media:** `/mnt/user/media`
+- **Web UI:** `http://orion:8686`
+
 ### Profilarr
 
 Quality profile manager for the arr suite. Syncs custom formats and quality profiles across Radarr/Sonarr instances. Includes a parser service for CF/QP testing.
