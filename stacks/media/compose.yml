@@ -86,7 +86,7 @@ services:
         net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
 
   seerr:
-    image: ghcr.io/seerr-team/seerr:v3.0.1
+    image: ghcr.io/seerr-team/seerr:v3.1.0
     init: true
     container_name: seerr
     user: "99:100"
