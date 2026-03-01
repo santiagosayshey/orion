@@ -24,7 +24,6 @@ pages:
               - type: remote
                 name: Orion
                 url: http://glance-agent:27973
-                token: ${GLANCE_AGENT_TOKEN}
 
       - size: full
         widgets:

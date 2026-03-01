@@ -73,7 +73,7 @@ services:
     restart: unless-stopped
     pid: host
     environment:
-      - TOKEN=${GLANCE_AGENT_TOKEN}
+      - TOKEN=
     volumes:
       - /:/host:ro
     networks:
