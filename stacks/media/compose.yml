@@ -13,9 +13,15 @@ services:
       - TZ=Australia/Adelaide
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:prowlarr
       - TP_THEME=nord
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/refs/heads/develop/Logo/1024.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:9696]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/refs/heads/develop/Logo/1024.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:9696]"
+      traefik.enable: "true"
+      traefik.http.routers.prowlarr.rule: "Host(`prowlarr.orion`)"
+      traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
 
   radarr:
     image: lscr.io/linuxserver/radarr:6.0.4.10291-ls293
@@ -32,9 +38,15 @@ services:
       - TZ=Australia/Adelaide
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
       - TP_THEME=nord
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/radarr/radarr/refs/heads/develop/Logo/1024.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:7878]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/radarr/radarr/refs/heads/develop/Logo/1024.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:7878]"
+      traefik.enable: "true"
+      traefik.http.routers.radarr.rule: "Host(`radarr.orion`)"
+      traefik.http.services.radarr.loadbalancer.server.port: "7878"
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:4.0.16.2944-ls303
@@ -51,9 +63,15 @@ services:
       - TZ=Australia/Adelaide
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:sonarr
       - TP_THEME=nord
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/Sonarr/Sonarr/refs/heads/develop/Logo/1024.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:8989]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Sonarr/Sonarr/refs/heads/develop/Logo/1024.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:8989]"
+      traefik.enable: "true"
+      traefik.http.routers.sonarr.rule: "Host(`sonarr.orion`)"
+      traefik.http.services.sonarr.loadbalancer.server.port: "8989"
 
   profilarr:
     image: ghcr.io/dictionarry-hub/profilarr:develop
@@ -72,9 +90,15 @@ services:
     depends_on:
       profilarr-parser:
         condition: service_healthy
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:6868]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:6868]"
+      traefik.enable: "true"
+      traefik.http.routers.profilarr.rule: "Host(`profilarr.orion`)"
+      traefik.http.services.profilarr.loadbalancer.server.port: "6868"
 
   profilarr-parser:
     image: ghcr.io/dictionarry-hub/profilarr-parser:develop
@@ -83,7 +107,7 @@ services:
     expose:
       - "5000"
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
 
   seerr:
     image: ghcr.io/seerr-team/seerr:v3.1.0
@@ -104,9 +128,15 @@ services:
       timeout: 3s
       interval: 15s
       retries: 3
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/seerr-team/seerr/develop/public/android-chrome-512x512.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:5055]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/seerr-team/seerr/develop/public/android-chrome-512x512.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:5055]"
+      traefik.enable: "true"
+      traefik.http.routers.seerr.rule: "Host(`seerr.orion`)"
+      traefik.http.services.seerr.loadbalancer.server.port: "5055"
 
   tracearr:
     image: ghcr.io/connorgallopo/tracearr:supervised
@@ -118,9 +148,15 @@ services:
       - /mnt/user/appdata/tracearr:/config
     environment:
       - TZ=Australia/Adelaide
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://tracearr.com/images/logo-transparent.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:3000]"
+      net.unraid.docker.icon: "https://tracearr.com/images/logo-transparent.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:3000]"
+      traefik.enable: "true"
+      traefik.http.routers.tracearr.rule: "Host(`tracearr.orion`)"
+      traefik.http.services.tracearr.loadbalancer.server.port: "3000"
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:5.1.4-r2-ls442
@@ -140,8 +176,8 @@ services:
       - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:qbittorrent
       - TP_THEME=nord
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/binhex/docker-templates/master/binhex/images/qbittorrent-icon.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/binhex/docker-templates/master/binhex/images/qbittorrent-icon.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
 
   qui:
     image: ghcr.io/autobrr/qui:v1.14.1
@@ -154,25 +190,15 @@ services:
       - /mnt/user/media:/media
     environment:
       - TZ=Australia/Adelaide
+    networks:
+      - default
+      - gateway
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:7476]"
-
-  navidrome:
-    image: deluan/navidrome:0.60.3
-    container_name: navidrome
-    restart: unless-stopped
-    ports:
-      - "4533:4533"
-    volumes:
-      - /mnt/user/appdata/navidrome:/data
-      - /mnt/user/media/library/music:/music:ro
-    environment:
-      - ND_SCANSCHEDULE=15m
-      - TZ=Australia/Adelaide
-    labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/navidrome/navidrome/master/resources/logo-192x192.png"
-        net.unraid.docker.webui: "http://[IP]:[PORT:4533]"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:7476]"
+      traefik.enable: "true"
+      traefik.http.routers.qui.rule: "Host(`qui.orion`)"
+      traefik.http.services.qui.loadbalancer.server.port: "7476"
 
   plex:
     image: lscr.io/linuxserver/plex:1.43.0.10492-121068a07-ls294
@@ -190,5 +216,9 @@ services:
       - TZ=Australia/Adelaide
       - VERSION=docker
     labels:
-        net.unraid.docker.icon: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png"
-        net.unraid.docker.webui: "http://[IP]:32400/web"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png"
+      net.unraid.docker.webui: "http://[IP]:32400/web"
+
+networks:
+  gateway:
+    external: true

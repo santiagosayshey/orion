@@ -7,8 +7,8 @@ Docker Compose stacks for Orion, my Unraid-based home server.
 Compose files live in `/stacks`, grouped by function rather than individual app. Services that need to communicate share a stack and network, reducing cross-stack networking complexity.
 ```
 stacks/
+├── gateway/        # pi-hole, traefik (DNS + reverse proxy)
 ├── media/          # arr stack, plex, etc.
-├── ripping/        # ARM, makemkv
 ├── monitoring/     # grafana, prometheus, etc.
 └── ...
 ```
