@@ -21,8 +21,10 @@ pages:
 
           - type: server-stats
             servers:
-              - type: local
+              - type: remote
                 name: Orion
+                url: http://glance-agent:27973
+                token: ${GLANCE_AGENT_TOKEN}
 
       - size: full
         widgets:
@@ -31,11 +33,11 @@ pages:
             cache: 1m
             sites:
               - title: Plex
-                url: http://plex.orion
+                url: http://192.168.8.239:32400
                 link: http://plex.orion
                 icon: di:plex
               - title: Immich
-                url: http://immich.orion
+                url: http://immich:2283
                 link: http://immich.orion
                 icon: di:immich
 
@@ -44,23 +46,23 @@ pages:
             cache: 1m
             sites:
               - title: Radarr
-                url: http://radarr.orion
+                url: http://radarr:7878
                 link: http://radarr.orion
                 icon: di:radarr
               - title: Sonarr
-                url: http://sonarr.orion
+                url: http://sonarr:8989
                 link: http://sonarr.orion
                 icon: di:sonarr
               - title: Prowlarr
-                url: http://prowlarr.orion
+                url: http://prowlarr:9696
                 link: http://prowlarr.orion
                 icon: di:prowlarr
               - title: Profilarr
-                url: http://profilarr.orion
+                url: http://profilarr:6868
                 link: http://profilarr.orion
                 icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png
               - title: Seerr
-                url: http://seerr.orion
+                url: http://seerr:5055
                 link: http://seerr.orion
                 icon: di:overseerr
 
@@ -69,7 +71,7 @@ pages:
             cache: 1m
             sites:
               - title: Qui
-                url: http://qui.orion
+                url: http://qui:7476
                 link: http://qui.orion
                 icon: di:qui
               - title: qBittorrent
@@ -77,7 +79,7 @@ pages:
                 link: http://192.168.8.239:8080
                 icon: di:qbittorrent
               - title: Tracearr
-                url: http://tracearr.orion
+                url: http://tracearr:3000
                 link: http://tracearr.orion
                 icon: https://tracearr.com/images/logo-transparent.png
 
@@ -86,19 +88,19 @@ pages:
             cache: 1m
             sites:
               - title: Pi-hole
-                url: http://pihole.orion/admin
+                url: http://pihole:80/admin
                 link: http://pihole.orion/admin
                 icon: di:pi-hole
               - title: Traefik
-                url: http://traefik.orion/dashboard/
+                url: http://traefik:80/dashboard/
                 link: http://traefik.orion/dashboard/
                 icon: di:traefik
               - title: Glance
-                url: http://home.orion
+                url: http://localhost:8080
                 link: http://home.orion
                 icon: di:glance
               - title: unRAID
-                url: http://unraid.orion
+                url: http://192.168.8.239:81
                 link: http://unraid.orion
                 icon: di:unraid
               - title: GL.iNet Flint 2

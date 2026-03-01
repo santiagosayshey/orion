@@ -51,6 +51,8 @@ services:
     image: glanceapp/glance:v0.8.4
     container_name: glance
     restart: unless-stopped
+    dns:
+      - 192.168.8.239
     volumes:
       - ./glance:/app/config:ro
       - ./glance/assets:/app/assets:ro
@@ -64,6 +66,20 @@ services:
       traefik.enable: "true"
       traefik.http.routers.glance.rule: "Host(`home.orion`)"
       traefik.http.services.glance.loadbalancer.server.port: "8080"
+
+  glance-agent:
+    image: glanceapp/agent
+    container_name: glance-agent
+    restart: unless-stopped
+    pid: host
+    environment:
+      - TOKEN=${GLANCE_AGENT_TOKEN}
+    volumes:
+      - /:/host:ro
+    networks:
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/glanceapp/glance/main/docs/logo.png"
 
 networks:
   gateway:
