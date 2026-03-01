@@ -52,15 +52,14 @@ services:
     container_name: glance
     restart: unless-stopped
     volumes:
-      - ./glance/glance.yml:/app/glance.yml:ro
-      - ./glance/pages:/app/pages:ro
+      - ./glance:/app/config:ro
       - ./glance/assets:/app/assets:ro
     environment:
       - TZ=Australia/Adelaide
     networks:
       - gateway
     labels:
-      net.unraid.docker.icon: "https://raw.githubusercontent.com/glanceapp/glance/main/docs/glance.svg"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/glanceapp/glance/main/docs/logo.png"
       net.unraid.docker.webui: "http://home.orion"
       traefik.enable: "true"
       traefik.http.routers.glance.rule: "Host(`home.orion`)"
