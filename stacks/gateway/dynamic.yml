@@ -5,9 +5,18 @@ http:
       entryPoints:
         - web
       service: plex
+    unraid:
+      rule: "Host(`unraid.orion`)"
+      entryPoints:
+        - web
+      service: unraid
 
   services:
     plex:
       loadBalancer:
         servers:
           - url: "http://192.168.8.239:32400"
+    unraid:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.8.239:81"
