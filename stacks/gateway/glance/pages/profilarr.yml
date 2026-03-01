@@ -1,0 +1,85 @@
+name: Profilarr
+columns:
+  - size: small
+    widgets:
+      - type: bookmarks
+        groups:
+          - title: Project
+            links:
+              - title: dictionarry.dev
+                url: https://dictionarry.dev
+                icon: https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4d2.png
+              - title: Profilarr
+                url: https://github.com/Dictionarry-Hub/profilarr
+                icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/v2/src/lib/client/assets/logo-firefox-circular-arrow.png
+              - title: Database
+                url: https://github.com/Dictionarry-Hub/database
+                icon: si:github
+              - title: Docker Hub
+                url: https://hub.docker.com/r/santiagosayshey/profilarr
+                icon: di:docker
+          - title: Community
+            links:
+              - title: Discord
+                url: https://discord.gg/XGdTYP5G8a
+                icon: di:discord
+              - title: Reddit
+                url: https://www.reddit.com/r/profilarr
+                icon: di:reddit
+              - title: Buy Me a Coffee
+                url: https://buymeacoffee.com/santiagosayshey
+                icon: si:buymeacoffee
+
+      - type: custom-api
+        title: Stats
+        cache: 1h
+        url: https://api.github.com/repos/Dictionarry-Hub/profilarr
+        subrequests:
+          database:
+            url: https://api.github.com/repos/Dictionarry-Hub/database
+          docker:
+            url: https://hub.docker.com/v2/repositories/santiagosayshey/profilarr
+        template: |
+          <ul class="list list-gap-10">
+            <li>⭐ Profilarr: <span class="color-highlight">{{ .JSON.Int "stargazers_count" }}</span></li>
+            <li>⭐ Database: <span class="color-highlight">{{ (.Subrequest "database").JSON.Int "stargazers_count" }}</span></li>
+            <li>🍴 Forks: <span class="color-highlight">{{ .JSON.Int "forks_count" }}</span></li>
+            <li>⚠️ Issues: <span class="color-highlight">{{ .JSON.Int "open_issues_count" }}</span></li>
+            <li>🐳 Pulls: <span class="color-highlight">{{ (.Subrequest "docker").JSON.Int "pull_count" }}</span></li>
+          </ul>
+
+  - size: full
+    widgets:
+      - type: repository
+        title: Profilarr
+        repository: Dictionarry-Hub/profilarr
+        pull-requests-limit: 5
+        issues-limit: 5
+
+      - type: repository
+        title: Database
+        repository: Dictionarry-Hub/database
+        commits-limit: 10
+        pull-requests-limit: 0
+        issues-limit: 0
+
+  - size: small
+    widgets:
+      - type: reddit
+        subreddit: profilarr
+        limit: 10
+        collapse-after: 5
+
+      - type: rss
+        title: Dev Logs
+        limit: 10
+        collapse-after: 5
+        feeds:
+          - url: https://dictionarry.dev/rss/devlogs.xml
+
+      - type: rss
+        title: Wiki Updates
+        limit: 8
+        collapse-after: 4
+        feeds:
+          - url: https://dictionarry.dev/rss/wiki.xml

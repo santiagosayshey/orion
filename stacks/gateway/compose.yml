@@ -21,7 +21,7 @@ services:
       - gateway
     labels:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/pi-hole/graphics/master/Vortex/Vortex.png"
-      net.unraid.docker.webui: "http://[IP]:[PORT:8053]/admin"
+      net.unraid.docker.webui: "http://pihole.orion/admin"
       traefik.enable: "true"
       traefik.http.routers.pihole.rule: "Host(`pihole.orion`)"
       traefik.http.services.pihole.loadbalancer.server.port: "80"
@@ -42,10 +42,29 @@ services:
       - gateway
     labels:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png"
-      net.unraid.docker.webui: "http://[IP]:[PORT:80]/dashboard/"
+      net.unraid.docker.webui: "http://traefik.orion/dashboard/"
       traefik.enable: "true"
       traefik.http.routers.traefik.rule: "Host(`traefik.orion`)"
       traefik.http.routers.traefik.service: "api@internal"
+
+  glance:
+    image: glanceapp/glance:v0.8.4
+    container_name: glance
+    restart: unless-stopped
+    volumes:
+      - ./glance/glance.yml:/app/glance.yml:ro
+      - ./glance/pages:/app/pages:ro
+      - /mnt/user/appdata/glance/assets:/app/assets:ro
+    environment:
+      - TZ=Australia/Adelaide
+    networks:
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/glanceapp/glance/main/docs/glance.svg"
+      net.unraid.docker.webui: "http://home.orion"
+      traefik.enable: "true"
+      traefik.http.routers.glance.rule: "Host(`home.orion`)"
+      traefik.http.services.glance.loadbalancer.server.port: "8080"
 
 networks:
   gateway:

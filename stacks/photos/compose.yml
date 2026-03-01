@@ -25,7 +25,7 @@ services:
       - gateway
     labels:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/immich-app/immich/main/design/immich-logo.png"
-      net.unraid.docker.webui: "http://[IP]:[PORT:2283]"
+      net.unraid.docker.webui: "http://immich.orion"
       traefik.enable: "true"
       traefik.http.routers.immich.rule: "Host(`immich.orion`)"
       traefik.http.services.immich.loadbalancer.server.port: "2283"

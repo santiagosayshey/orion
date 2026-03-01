@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  assets-path: /app/assets
+
+theme:
+  background-color: 240 8 9
+  primary-color: 220 70 65
+  contrast-multiplier: 1.1
+
+pages:
+  - $include: pages/homelab.yml
+  - $include: pages/trackers.yml
+  - $include: pages/profilarr.yml
