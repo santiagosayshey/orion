@@ -54,7 +54,7 @@ services:
     volumes:
       - ./glance/glance.yml:/app/glance.yml:ro
       - ./glance/pages:/app/pages:ro
-      - /mnt/user/appdata/glance/assets:/app/assets:ro
+      - ./glance/assets:/app/assets:ro
     environment:
       - TZ=Australia/Adelaide
     networks:
