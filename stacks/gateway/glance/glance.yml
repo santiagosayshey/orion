@@ -9,6 +9,6 @@ theme:
   custom-css-file: /app/assets/custom.css
 
 pages:
-  - $include: pages/homelab.yml
-  - $include: pages/trackers.yml
-  - $include: pages/profilarr.yml
+  $include: pages/homelab.yml
+  $include: pages/trackers.yml
+  $include: pages/profilarr.yml
