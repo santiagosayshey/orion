@@ -9,6 +9,364 @@ theme:
   custom-css-file: /app/assets/custom.css
 
 pages:
-  $include: pages/homelab.yml
-  $include: pages/trackers.yml
-  $include: pages/profilarr.yml
+  - name: Homelab
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 12h
+
+          - type: calendar
+            first-day-of-week: monday
+
+          - type: server-stats
+            servers:
+              - type: local
+                name: Orion
+
+      - size: full
+        widgets:
+          - type: monitor
+            title: Media Server
+            cache: 1m
+            sites:
+              - title: Plex
+                url: http://plex.orion
+                link: http://plex.orion
+                icon: di:plex
+              - title: Immich
+                url: http://immich.orion
+                link: http://immich.orion
+                icon: di:immich
+
+          - type: monitor
+            title: Media Management
+            cache: 1m
+            sites:
+              - title: Radarr
+                url: http://radarr.orion
+                link: http://radarr.orion
+                icon: di:radarr
+              - title: Sonarr
+                url: http://sonarr.orion
+                link: http://sonarr.orion
+                icon: di:sonarr
+              - title: Prowlarr
+                url: http://prowlarr.orion
+                link: http://prowlarr.orion
+                icon: di:prowlarr
+              - title: Profilarr
+                url: http://profilarr.orion
+                link: http://profilarr.orion
+                icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png
+              - title: Seerr
+                url: http://seerr.orion
+                link: http://seerr.orion
+                icon: di:overseerr
+
+          - type: monitor
+            title: Downloads
+            cache: 1m
+            sites:
+              - title: Qui
+                url: http://qui.orion
+                link: http://qui.orion
+                icon: di:qui
+              - title: qBittorrent
+                url: http://192.168.8.239:8080
+                link: http://192.168.8.239:8080
+                icon: di:qbittorrent
+              - title: Tracearr
+                url: http://tracearr.orion
+                link: http://tracearr.orion
+                icon: https://tracearr.com/images/logo-transparent.png
+
+          - type: monitor
+            title: Infrastructure
+            cache: 1m
+            sites:
+              - title: Pi-hole
+                url: http://pihole.orion/admin
+                link: http://pihole.orion/admin
+                icon: di:pi-hole
+              - title: Traefik
+                url: http://traefik.orion/dashboard/
+                link: http://traefik.orion/dashboard/
+                icon: di:traefik
+              - title: Glance
+                url: http://home.orion
+                link: http://home.orion
+                icon: di:glance
+              - title: unRAID
+                url: http://unraid.orion
+                link: http://unraid.orion
+                icon: di:unraid
+              - title: GL.iNet Flint 2
+                url: http://192.168.8.1
+                link: http://192.168.8.1
+                icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f4/49/d1/f449d152-1812-08f4-f5c5-471e5f971db8/AppIcon-0-0-1x_U007emarketing-0-11-0-0-85-220.png/400x400ia-75.webp
+              - title: Tailscale
+                url: https://login.tailscale.com/admin/machines
+                link: https://login.tailscale.com/admin/machines
+                icon: si:tailscale
+
+  - name: Trackers
+    columns:
+      - size: small
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Tools
+                links:
+                  - title: Prowlarr
+                    url: http://prowlarr.orion
+                    icon: di:prowlarr
+                  - title: Qui
+                    url: http://qui.orion
+                    icon: di:qui
+                  - title: PreDB
+                    url: https://predb.net
+                    icon: /assets/icons/predb.png
+
+              - title: Resources
+                links:
+                  - title: TrackerHub
+                    url: https://hdvinnie.github.io/TrackerHub
+                  - title: Tracker status
+                    url: https://trackerstatus.info/
+                  - title: Tracker Spreadsheet
+                    url: https://hdvinnie.github.io/Private-Trackers-Spreadsheet/
+                  - title: r/trackers Wiki
+                    url: https://www.reddit.com/r/trackers/wiki/index
+
+          - type: rss
+            title: TorrentFreak
+            limit: 10
+            collapse-after: 5
+            feeds:
+              - url: https://torrentfreak.com/feed/
+                title: TorrentFreak
+
+      - size: full
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Movies
+                links:
+                  - title: PassThePopcorn
+                    url: https://passthepopcorn.me
+                    icon: /assets/icons/ptp.ico
+                  - title: Anthelion
+                    url: https://anthelion.me
+                    icon: /assets/icons/ant.png
+                  - title: Secret Cinema
+                    url: https://secret-cinema.pw
+                    icon: /assets/icons/sc.png
+                  - title: Cinemageddon
+                    url: http://cinemageddon.net
+                    icon: /assets/icons/cg.ico
+                  - title: Karagarga
+                    url: https://karagarga.in
+                    icon: /assets/icons/kg.ico
+
+              - title: TV
+                links:
+                  - title: BroadcasTheNet
+                    url: https://broadcasthe.net
+                    icon: /assets/icons/btn.ico
+                  - title: TV Vault
+                    url: https://tv-vault.me
+                    icon: /assets/icons/tvv.ico
+                  - title: MoreThanTV
+                    url: https://www.morethantv.me
+                    icon: /assets/icons/mtv.png
+                  - title: Nebulance
+                    url: https://nebulance.io
+                    icon: /assets/icons/nbl.png
+
+              - title: HD
+                links:
+                  - title: BeyondHD
+                    url: https://beyond-hd.me
+                    icon: /assets/icons/bhd.png
+                  - title: HDBits
+                    url: https://hdbits.org
+                    icon: /assets/icons/hdb.png
+                  - title: Blutopia
+                    url: https://blutopia.cc
+                    icon: /assets/icons/blu.png
+                  - title: Hawke-Uno
+                    url: https://hawke.uno
+                    icon: /assets/icons/hawke.png
+                  - title: Aither
+                    url: https://aither.cc
+                    icon: /assets/icons/aither.ico
+                  - title: UHDBits
+                    url: https://uhdbits.org
+                    icon: /assets/icons/uhd.ico
+                  - title: ReelFLiX
+                    url: https://reelflix.xyz
+                    icon: /assets/icons/reelflix.png
+                  - title: GreatPosterWall
+                    url: https://greatposterwall.com
+                    icon: /assets/icons/gpw.ico
+                  - title: FearNoPeer
+                    url: https://fearnopeer.com
+                    icon: /assets/icons/fnp.png
+
+              - title: Music
+                links:
+                  - title: Redacted
+                    url: https://redacted.sh
+                    icon: /assets/icons/red.png
+                  - title: Orpheus
+                    url: https://orpheus.network
+                    icon: /assets/icons/ops.ico
+                  - title: Concertos
+                    url: https://concertos.live
+                    icon: /assets/icons/concertos.png
+
+              - title: Games
+                links:
+                  - title: GazelleGames
+                    url: https://www.gazellegames.net
+                    icon: /assets/icons/ggn.ico
+
+              - title: Sports
+                links:
+                  - title: SportsCult
+                    url: https://sportscult.org
+                    icon: /assets/icons/sportscult.ico
+
+              - title: Books
+                links:
+                  - title: MyAnonamouse
+                    url: https://www.myanonamouse.net
+                    icon: /assets/icons/mam.png
+
+              - title: Anime
+                links:
+                  - title: AnimeBytes
+                    url: https://animebytes.tv
+                    icon: /assets/icons/ab.ico
+                  - title: BakaBT
+                    url: https://bakabt.me
+                    icon: /assets/icons/bbt.png
+                  - title: Nyaa
+                    url: https://nyaa.land
+                    icon: /assets/icons/nyaa.png
+
+              - title: Porn
+                links:
+                  - title: Empornium
+                    url: https://www.empornium.is
+                    icon: /assets/icons/emp.ico
+
+              - title: General
+                links:
+                  - title: FileList
+                    url: https://filelist.io
+                    icon: /assets/icons/fl.ico
+                  - title: IPTorrents
+                    url: https://ipt.lol
+                    icon: /assets/icons/ipt.ico
+                  - title: TorrentLeech
+                    url: https://www.torrentleech.me
+                    icon: /assets/icons/tl.png
+
+      - size: small
+        widgets:
+          - type: reddit
+            subreddit: trackers
+            limit: 15
+            collapse-after: 5
+          - type: reddit
+            subreddit: OpenSignups
+            limit: 10
+            collapse-after: 5
+
+  - name: Profilarr
+    columns:
+      - size: small
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Project
+                links:
+                  - title: dictionarry.dev
+                    url: https://dictionarry.dev
+                    icon: https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4d2.png
+                  - title: Profilarr
+                    url: https://github.com/Dictionarry-Hub/profilarr
+                    icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/v2/src/lib/client/assets/logo-firefox-circular-arrow.png
+                  - title: Database
+                    url: https://github.com/Dictionarry-Hub/database
+                    icon: si:github
+                  - title: Docker Hub
+                    url: https://hub.docker.com/r/santiagosayshey/profilarr
+                    icon: di:docker
+              - title: Community
+                links:
+                  - title: Discord
+                    url: https://discord.gg/XGdTYP5G8a
+                    icon: di:discord
+                  - title: Reddit
+                    url: https://www.reddit.com/r/profilarr
+                    icon: di:reddit
+                  - title: Buy Me a Coffee
+                    url: https://buymeacoffee.com/santiagosayshey
+                    icon: si:buymeacoffee
+
+          - type: custom-api
+            title: Stats
+            cache: 1h
+            url: https://api.github.com/repos/Dictionarry-Hub/profilarr
+            subrequests:
+              database:
+                url: https://api.github.com/repos/Dictionarry-Hub/database
+              docker:
+                url: https://hub.docker.com/v2/repositories/santiagosayshey/profilarr
+            template: |
+              <ul class="list list-gap-10">
+                <li>⭐ Profilarr: <span class="color-highlight">{{ .JSON.Int "stargazers_count" }}</span></li>
+                <li>⭐ Database: <span class="color-highlight">{{ (.Subrequest "database").JSON.Int "stargazers_count" }}</span></li>
+                <li>🍴 Forks: <span class="color-highlight">{{ .JSON.Int "forks_count" }}</span></li>
+                <li>⚠️ Issues: <span class="color-highlight">{{ .JSON.Int "open_issues_count" }}</span></li>
+                <li>🐳 Pulls: <span class="color-highlight">{{ (.Subrequest "docker").JSON.Int "pull_count" }}</span></li>
+              </ul>
+
+      - size: full
+        widgets:
+          - type: repository
+            title: Profilarr
+            repository: Dictionarry-Hub/profilarr
+            pull-requests-limit: 5
+            issues-limit: 5
+
+          - type: repository
+            title: Database
+            repository: Dictionarry-Hub/database
+            commits-limit: 10
+            pull-requests-limit: 0
+            issues-limit: 0
+
+      - size: small
+        widgets:
+          - type: reddit
+            subreddit: profilarr
+            limit: 10
+            collapse-after: 5
+
+          - type: rss
+            title: Dev Logs
+            limit: 10
+            collapse-after: 5
+            feeds:
+              - url: https://dictionarry.dev/rss/devlogs.xml
+
+          - type: rss
+            title: Wiki Updates
+            limit: 8
+            collapse-after: 4
+            feeds:
+              - url: https://dictionarry.dev/rss/wiki.xml
