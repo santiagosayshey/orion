@@ -20,6 +20,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/refs/heads/develop/Logo/1024.png"
       net.unraid.docker.webui: "http://prowlarr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.prowlarr.rule: "Host(`prowlarr.orion`)"
       traefik.http.services.prowlarr.loadbalancer.server.port: "9696"
 
@@ -45,6 +46,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/radarr/radarr/refs/heads/develop/Logo/1024.png"
       net.unraid.docker.webui: "http://radarr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.radarr.rule: "Host(`radarr.orion`)"
       traefik.http.services.radarr.loadbalancer.server.port: "7878"
 
@@ -70,6 +72,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/Sonarr/Sonarr/refs/heads/develop/Logo/1024.png"
       net.unraid.docker.webui: "http://sonarr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.sonarr.rule: "Host(`sonarr.orion`)"
       traefik.http.services.sonarr.loadbalancer.server.port: "8989"
 
@@ -97,6 +100,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
       net.unraid.docker.webui: "http://profilarr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.profilarr.rule: "Host(`profilarr.orion`)"
       traefik.http.services.profilarr.loadbalancer.server.port: "6868"
 
@@ -135,6 +139,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/seerr-team/seerr/develop/public/android-chrome-512x512.png"
       net.unraid.docker.webui: "http://seerr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.seerr.rule: "Host(`seerr.orion`)"
       traefik.http.services.seerr.loadbalancer.server.port: "5055"
 
@@ -155,6 +160,7 @@ services:
       net.unraid.docker.icon: "https://tracearr.com/images/logo-transparent.png"
       net.unraid.docker.webui: "http://tracearr.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.tracearr.rule: "Host(`tracearr.orion`)"
       traefik.http.services.tracearr.loadbalancer.server.port: "3000"
 
@@ -197,6 +203,7 @@ services:
       net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
       net.unraid.docker.webui: "http://qui.orion"
       traefik.enable: "true"
+      traefik.docker.network: "gateway"
       traefik.http.routers.qui.rule: "Host(`qui.orion`)"
       traefik.http.services.qui.loadbalancer.server.port: "7476"
 
