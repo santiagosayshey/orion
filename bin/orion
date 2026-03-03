@@ -1,0 +1,360 @@
+#!/usr/bin/env bash
+set -e
+
+STACKS_DIR="/mnt/user/appdata/orion/stacks"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Get all stack names
+get_all_stacks() {
+    find "$STACKS_DIR" -maxdepth 1 -mindepth 1 -type d -exec basename {} \; | sort
+}
+
+# Check if stack exists
+stack_exists() {
+    [[ -d "$STACKS_DIR/$1" && -f "$STACKS_DIR/$1/compose.yml" ]]
+}
+
+# Run docker compose for a stack
+dc() {
+    local stack="$1"
+    shift
+    docker compose -f "$STACKS_DIR/$stack/compose.yml" "$@"
+}
+
+# Commands
+cmd_up() {
+    local stacks=("$@")
+    [[ ${#stacks[@]} -eq 0 ]] && mapfile -t stacks < <(get_all_stacks)
+
+    for stack in "${stacks[@]}"; do
+        if stack_exists "$stack"; then
+            echo -e "${BLUE}Starting${NC} $stack"
+            dc "$stack" up -d
+        else
+            echo -e "${RED}Stack not found:${NC} $stack"
+        fi
+    done
+}
+
+cmd_down() {
+    local stacks=("$@")
+    [[ ${#stacks[@]} -eq 0 ]] && mapfile -t stacks < <(get_all_stacks)
+
+    for stack in "${stacks[@]}"; do
+        if stack_exists "$stack"; then
+            echo -e "${YELLOW}Stopping${NC} $stack"
+            dc "$stack" down
+        else
+            echo -e "${RED}Stack not found:${NC} $stack"
+        fi
+    done
+}
+
+cmd_restart() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: orion restart <stack> [stack...]"
+        exit 1
+    fi
+
+    for stack in "$@"; do
+        if stack_exists "$stack"; then
+            echo -e "${YELLOW}Restarting${NC} $stack"
+            dc "$stack" restart
+        else
+            echo -e "${RED}Stack not found:${NC} $stack"
+        fi
+    done
+}
+
+cmd_logs() {
+    local follow=false
+    local stack=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -f|--follow) follow=true; shift ;;
+            *) stack="$1"; shift ;;
+        esac
+    done
+
+    if [[ -z "$stack" ]]; then
+        echo "Usage: orion logs [-f] <stack>"
+        exit 1
+    fi
+
+    if stack_exists "$stack"; then
+        if $follow; then
+            dc "$stack" logs -f
+        else
+            dc "$stack" logs
+        fi
+    else
+        echo -e "${RED}Stack not found:${NC} $stack"
+        exit 1
+    fi
+}
+
+cmd_pull() {
+    local stacks=("$@")
+    [[ ${#stacks[@]} -eq 0 ]] && mapfile -t stacks < <(get_all_stacks)
+
+    for stack in "${stacks[@]}"; do
+        if stack_exists "$stack"; then
+            echo -e "${BLUE}Pulling${NC} $stack"
+            dc "$stack" pull
+        else
+            echo -e "${RED}Stack not found:${NC} $stack"
+        fi
+    done
+}
+
+cmd_status() {
+    printf "%-20s %s\n" "STACK" "STATUS"
+    printf "%-20s %s\n" "---" "------"
+
+    for stack in $(get_all_stacks); do
+        if stack_exists "$stack"; then
+            local running=$(dc "$stack" ps --format json 2>/dev/null | jq -r 'select(.State == "running") | .Name' | wc -l)
+            local total=$(dc "$stack" ps --format json -a 2>/dev/null | jq -r '.Name' | wc -l)
+
+            if [[ $total -eq 0 ]]; then
+                printf "%-20s ${YELLOW}not created${NC}\n" "$stack"
+            elif [[ $running -eq $total ]]; then
+                printf "%-20s ${GREEN}running${NC} ($running/$total)\n" "$stack"
+            elif [[ $running -eq 0 ]]; then
+                printf "%-20s ${RED}stopped${NC} ($running/$total)\n" "$stack"
+            else
+                printf "%-20s ${YELLOW}partial${NC} ($running/$total)\n" "$stack"
+            fi
+        fi
+    done
+}
+
+cmd_new() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: orion new <stack>"
+        exit 1
+    fi
+
+    local stack="$1"
+    local stack_dir="$STACKS_DIR/$stack"
+
+    if [[ -d "$stack_dir" ]]; then
+        echo -e "${RED}Stack already exists:${NC} $stack"
+        exit 1
+    fi
+
+    mkdir -p "$stack_dir"
+    cat > "$stack_dir/compose.yml" << 'EOF'
+services:
+  app:
+    image:
+    container_name:
+    restart: unless-stopped
+    # ports:
+    #   - "8080:8080"
+    # environment:
+    #   - PUID=99
+    #   - PGID=100
+    #   - TZ=Australia/Adelaide
+    # volumes:
+    #   - /mnt/user/appdata/APP:/config
+    # networks:
+    #   - default
+    #   - gateway
+    # labels:
+    #   net.unraid.docker.icon: ""
+    #   net.unraid.docker.webui: ""
+    #   traefik.enable: "true"
+    #   traefik.docker.network: "gateway"
+    #   traefik.http.routers.APP.rule: "Host(`APP.orion`)"
+    #   traefik.http.services.APP.loadbalancer.server.port: "8080"
+
+# networks:
+#   gateway:
+#     external: true
+EOF
+
+    echo -e "${GREEN}Created${NC} $stack_dir/compose.yml"
+}
+
+cmd_rm() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: orion rm <stack>"
+        exit 1
+    fi
+
+    local stack="$1"
+
+    if ! stack_exists "$stack"; then
+        echo -e "${RED}Stack not found:${NC} $stack"
+        exit 1
+    fi
+
+    read -p "Remove $stack? This will delete all config. [y/N] " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        dc "$stack" down 2>/dev/null || true
+        rm -rf "$STACKS_DIR/$stack"
+        echo -e "${GREEN}Removed${NC} $stack"
+    else
+        echo "Cancelled"
+    fi
+}
+
+cmd_info() {
+    if [[ $# -eq 0 ]]; then
+        printf "%-20s %-12s %-10s %-10s %s\n" "STACK" "STATUS" "CPU" "MEMORY" "IMAGE"
+        printf "%-20s %-12s %-10s %-10s %s\n" "---" "------" "---" "------" "-----"
+
+        for stack in $(get_all_stacks); do
+            if stack_exists "$stack"; then
+                local container_id=$(dc "$stack" ps -q 2>/dev/null | head -1)
+
+                if [[ -n "$container_id" ]]; then
+                    local status=$(docker inspect --format '{{.State.Status}}' "$container_id" 2>/dev/null)
+                    local image=$(docker inspect --format '{{.Config.Image}}' "$container_id" 2>/dev/null | sed 's/.*\///' | cut -c1-30)
+
+                    if [[ "$status" == "running" ]]; then
+                        local stats=$(docker stats --no-stream --format "{{.CPUPerc}}\t{{.MemUsage}}" "$container_id" 2>/dev/null)
+                        local cpu=$(echo "$stats" | cut -f1)
+                        local mem=$(echo "$stats" | cut -f2 | cut -d'/' -f1)
+                        printf "%-20s ${GREEN}%-12s${NC} %-10s %-10s %s\n" "$stack" "$status" "$cpu" "$mem" "$image"
+                    else
+                        printf "%-20s ${RED}%-12s${NC} %-10s %-10s %s\n" "$stack" "$status" "-" "-" "$image"
+                    fi
+                else
+                    printf "%-20s ${YELLOW}%-12s${NC} %-10s %-10s %s\n" "$stack" "not created" "-" "-" "-"
+                fi
+            fi
+        done
+        return
+    fi
+
+    local stack="$1"
+
+    if ! stack_exists "$stack"; then
+        echo -e "${RED}Stack not found:${NC} $stack"
+        exit 1
+    fi
+
+    local container_id=$(dc "$stack" ps -q 2>/dev/null | head -1)
+
+    echo -e "${BLUE}═══════════════════════════════════════════════════════════════${NC}"
+    echo -e "${BLUE}  $stack${NC}"
+    echo -e "${BLUE}═══════════════════════════════════════════════════════════════${NC}"
+
+    if [[ -z "$container_id" ]]; then
+        echo -e "Status:     ${YELLOW}not created${NC}"
+        echo ""
+        echo "Compose file: $STACKS_DIR/$stack/compose.yml"
+        return
+    fi
+
+    local status=$(docker inspect --format '{{.State.Status}}' "$container_id")
+    local image=$(docker inspect --format '{{.Config.Image}}' "$container_id")
+    local created=$(docker inspect --format '{{.Created}}' "$container_id" | cut -d'T' -f1)
+    local container_name=$(docker inspect --format '{{.Name}}' "$container_id" | sed 's/^\///')
+
+    if [[ "$status" == "running" ]]; then
+        echo -e "Status:     ${GREEN}$status${NC}"
+        local uptime=$(docker inspect --format '{{.State.StartedAt}}' "$container_id" | xargs -I{} date -d {} +%s | xargs -I{} bash -c 'echo $(( ($(date +%s) - {}) / 86400 ))d $(( (($(date +%s) - {}) % 86400) / 3600 ))h $(( (($(date +%s) - {}) % 3600) / 60 ))m')
+        echo "Uptime:     $uptime"
+    else
+        echo -e "Status:     ${RED}$status${NC}"
+    fi
+
+    echo "Container:  $container_name"
+    echo "Image:      $image"
+    echo "Created:    $created"
+
+    local ports=$(docker inspect --format '{{range $p, $conf := .NetworkSettings.Ports}}{{if $conf}}{{(index $conf 0).HostPort}}->{{$p}} {{end}}{{end}}' "$container_id")
+    [[ -n "$ports" ]] && echo "Ports:      $ports"
+
+    if [[ "$status" == "running" ]]; then
+        echo ""
+        echo -e "${BLUE}Resources${NC}"
+        docker stats --no-stream --format "CPU: {{.CPUPerc}}  Memory: {{.MemUsage}}  Net I/O: {{.NetIO}}" "$container_id"
+    fi
+
+    local volumes=$(docker inspect --format '{{range .Mounts}}{{.Source}} -> {{.Destination}}{{"\n"}}{{end}}' "$container_id" | head -10)
+    if [[ -n "$volumes" ]]; then
+        echo ""
+        echo -e "${BLUE}Volumes${NC}"
+        echo "$volumes" | while read -r line; do [[ -n "$line" ]] && echo "  $line"; done
+    fi
+
+    local networks=$(docker inspect --format '{{range $net, $conf := .NetworkSettings.Networks}}{{$net}} ({{$conf.IPAddress}}){{"\n"}}{{end}}' "$container_id")
+    if [[ -n "$networks" ]]; then
+        echo ""
+        echo -e "${BLUE}Networks${NC}"
+        echo "$networks" | while read -r line; do [[ -n "$line" ]] && echo "  $line"; done
+    fi
+
+    echo ""
+    echo -e "${BLUE}Compose File${NC}"
+    echo "────────────────────────────────────────────────────────────────"
+    sed -E '
+        s/(pass|password|key|token|secret|apikey|api_key|auth)[=:][[:space:]]*[^[:space:]#]+/\1: [REDACTED]/gi
+        s/(PASS|PASSWORD|KEY|TOKEN|SECRET|APIKEY|API_KEY|AUTH)[=:][[:space:]]*[^[:space:]#]+/\1=[REDACTED]/gi
+    ' "$STACKS_DIR/$stack/compose.yml"
+}
+
+cmd_edit() {
+    if [[ $# -eq 0 ]]; then
+        echo "Usage: orion edit <stack>"
+        exit 1
+    fi
+
+    local stack="$1"
+
+    if ! stack_exists "$stack"; then
+        echo -e "${RED}Stack not found:${NC} $stack"
+        exit 1
+    fi
+
+    ${EDITOR:-vi} "$STACKS_DIR/$stack/compose.yml"
+}
+
+cmd_help() {
+    echo "Usage: orion <command> [args]"
+    echo ""
+    echo "Commands:"
+    echo "  up [stacks...]      Start all or specific stacks"
+    echo "  down [stacks...]    Stop all or specific stacks"
+    echo "  restart <stacks...> Restart specific stacks"
+    echo "  logs [-f] <stack>   Show logs for a stack (-f to follow)"
+    echo "  pull [stacks...]    Pull latest images"
+    echo "  status              Show status of all stacks"
+    echo "  new <stack>         Create a new stack from template"
+    echo "  rm <stack>          Remove a stack (with confirmation)"
+    echo "  info [stack]        Show detailed info (or overview of all)"
+    echo "  edit <stack>        Edit a stack's compose.yml"
+    echo "  help                Show this help"
+}
+
+# Main
+case "${1:-}" in
+    up)      shift; cmd_up "$@" ;;
+    down)    shift; cmd_down "$@" ;;
+    restart) shift; cmd_restart "$@" ;;
+    logs)    shift; cmd_logs "$@" ;;
+    pull)    shift; cmd_pull "$@" ;;
+    status)  cmd_status ;;
+    new)     shift; cmd_new "$@" ;;
+    rm)      shift; cmd_rm "$@" ;;
+    info)    shift; cmd_info "$@" ;;
+    edit)    shift; cmd_edit "$@" ;;
+    help|--help|-h|"") cmd_help ;;
+    *)
+        echo -e "${RED}Unknown command:${NC} $1"
+        cmd_help
+        exit 1
+        ;;
+esac
