@@ -14,7 +14,7 @@ services:
     networks:
       - gateway
     labels:
-      net.unraid.docker.icon: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/traefik.png"
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/traefik/traefik/refs/heads/master/webui/public/icons/icon-512x512.png"
       net.unraid.docker.webui: "http://traefik.orion/dashboard/"
       traefik.enable: "true"
       traefik.http.routers.traefik.rule: "Host(`traefik.orion`)"
@@ -22,4 +22,4 @@ services:
 
 networks:
   gateway:
-    name: gateway
+    external: true

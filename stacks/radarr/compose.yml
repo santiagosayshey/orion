@@ -1,0 +1,32 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    ports:
+      - "7878:7878"
+    volumes:
+      - /mnt/user/appdata/radarr:/config
+      - /mnt/user/media:/media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:radarr
+      - TP_THEME=nord
+    networks:
+      - media
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/radarr/radarr/refs/heads/develop/Logo/1024.png"
+      net.unraid.docker.webui: "http://radarr.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.radarr.rule: "Host(`radarr.orion`)"
+      traefik.http.services.radarr.loadbalancer.server.port: "7878"
+
+networks:
+  media:
+    external: true
+  gateway:
+    external: true

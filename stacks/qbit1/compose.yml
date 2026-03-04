@@ -1,0 +1,27 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50413:50413"
+    volumes:
+      - /mnt/user/appdata/qbittorrent:/config
+      - /mnt/user/media:/media
+      - /mnt/user/appdata/orion/bin:/scripts:ro
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - DOCKER_MODS=ghcr.io/themepark-dev/theme.park:qbittorrent
+      - TP_THEME=nord
+    networks:
+      - media
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/binhex/docker-templates/master/binhex/images/qbittorrent-icon.png"
+      net.unraid.docker.webui: "http://[IP]:[PORT:8080]"
+
+networks:
+  media:
+    external: true

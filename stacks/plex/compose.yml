@@ -1,0 +1,19 @@
+services: 
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /mnt/user/appdata/plex:/config
+      - /mnt/user/media:/media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - VERSION=docker
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/plex-logo.png"
+      net.unraid.docker.webui: "http://plex.orion"

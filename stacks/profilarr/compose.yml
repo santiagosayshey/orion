@@ -1,0 +1,45 @@
+services:
+  profilarr:
+    image: ghcr.io/dictionarry-hub/profilarr:develop
+    container_name: profilarr
+    restart: unless-stopped
+    ports:
+      - "6868:6868"
+    volumes:
+      - /mnt/user/appdata/profilarr:/config
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - PARSER_HOST=profilarr-parser
+      - PARSER_PORT=5000
+    depends_on:
+      profilarr-parser:
+        condition: service_healthy
+    networks:
+      - default
+      - media
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
+      net.unraid.docker.webui: "http://profilarr.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.profilarr.rule: "Host(`profilarr.orion`)"
+      traefik.http.services.profilarr.loadbalancer.server.port: "6868"
+
+  profilarr-parser:
+    image: ghcr.io/dictionarry-hub/profilarr-parser:develop
+    container_name: profilarr-parser
+    restart: unless-stopped
+    expose:
+      - "5000"
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png"
+
+networks:
+  default:
+  media:
+    external: true
+  gateway:
+    external: true

@@ -1,0 +1,28 @@
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:latest
+    container_name: qui
+    restart: unless-stopped
+    ports:
+      - "7476:7476"
+    volumes:
+      - /mnt/user/appdata/qui:/config
+      - /mnt/user/media:/media
+    environment:
+      - TZ=Australia/Adelaide
+    networks:
+      - media
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/autobrr/qui/refs/heads/develop/documentation/static/img/qui.png"
+      net.unraid.docker.webui: "http://qui.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.qui.rule: "Host(`qui.orion`)"
+      traefik.http.services.qui.loadbalancer.server.port: "7476"
+
+networks:
+  media:
+    external: true
+  gateway:
+    external: true

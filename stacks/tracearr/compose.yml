@@ -1,0 +1,27 @@
+services:
+  tracearr:
+    image: ghcr.io/connorgallopo/tracearr:latest
+    container_name: tracearr
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - /mnt/user/appdata/tracearr:/config
+    environment:
+      - TZ=Australia/Adelaide
+    networks:
+      - media
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://tracearr.com/images/logo-transparent.png"
+      net.unraid.docker.webui: "http://tracearr.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.tracearr.rule: "Host(`tracearr.orion`)"
+      traefik.http.services.tracearr.loadbalancer.server.port: "3000"
+
+networks:
+  media:
+    external: true
+  gateway:
+    external: true

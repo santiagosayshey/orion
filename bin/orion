@@ -20,11 +20,11 @@ stack_exists() {
     [[ -d "$STACKS_DIR/$1" && -f "$STACKS_DIR/$1/compose.yml" ]]
 }
 
-# Run docker compose for a stack
+# Run docker-compose for a stack
 dc() {
     local stack="$1"
     shift
-    docker compose -f "$STACKS_DIR/$stack/compose.yml" "$@"
+    docker-compose -f "$STACKS_DIR/$stack/compose.yml" "$@"
 }
 
 # Commands
