@@ -322,6 +322,22 @@ cmd_edit() {
     ${EDITOR:-vi} "$STACKS_DIR/$stack/compose.yml"
 }
 
+cmd_update() {
+    local stacks=("$@")
+    [[ ${#stacks[@]} -eq 0 ]] && mapfile -t stacks < <(get_all_stacks)
+
+    for stack in "${stacks[@]}"; do
+        if stack_exists "$stack"; then
+            echo -e "${BLUE}Updating${NC} $stack"
+            dc "$stack" pull
+            dc "$stack" down
+            dc "$stack" up -d
+        else
+            echo -e "${RED}Stack not found:${NC} $stack"
+        fi
+    done
+}
+
 cmd_help() {
     echo "Usage: orion <command> [args]"
     echo ""
@@ -336,6 +352,7 @@ cmd_help() {
     echo "  rm <stack>          Remove a stack (with confirmation)"
     echo "  info [stack]        Show detailed info (or overview of all)"
     echo "  edit <stack>        Edit a stack's compose.yml"
+    echo "  update [stacks...]  Pull, stop, and restart all or specific stacks"
     echo "  help                Show this help"
 }
 
@@ -352,6 +369,7 @@ case "${1:-}" in
     info)    shift; cmd_info "$@" ;;
     edit)    shift; cmd_edit "$@" ;;
     help|--help|-h|"") cmd_help ;;
+    update)  shift; cmd_update "$@" ;;
     *)
         echo -e "${RED}Unknown command:${NC} $1"
         cmd_help
