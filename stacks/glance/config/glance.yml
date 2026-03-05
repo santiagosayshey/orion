@@ -4,7 +4,7 @@ server:
   assets-path: /app/config/assets
 
 theme:
-  custom-css-file: /app/config/custom.css
+  custom-css-file: /assets/custom.css
   background-color: 220 17 17
   primary-color: 213 32 52
   positive-color: 193 70 60
