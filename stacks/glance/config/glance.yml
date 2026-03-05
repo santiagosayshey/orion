@@ -2,9 +2,6 @@ server:
   port: 8080
   proxied: true
 
-branding:
-  logo-text: Glance
-
 pages:
   - name: Orion
     columns:
@@ -100,7 +97,7 @@ pages:
             sites:
               - title: Plex
                 url: http://plex.orion
-                check-url: http://192.168.8.219:32400/web
+                check-url: http://192.168.8.239:32400
                 icon: di:plex
               - title: Immich
                 url: http://immich.orion
