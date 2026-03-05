@@ -1,6 +1,10 @@
 server:
   port: 8080
   proxied: true
+  assets-path: /app/config/assets
+
+theme:
+  custom-css-file: /app/config/custom.css
 
 pages:
   - name: Orion
@@ -99,6 +103,8 @@ pages:
                 url: http://plex.orion
                 check-url: http://192.168.8.239:32400
                 icon: di:plex
+                alt-status-codes:
+                  - 401
               - title: Immich
                 url: http://immich.orion
                 check-url: http://immich:2283
