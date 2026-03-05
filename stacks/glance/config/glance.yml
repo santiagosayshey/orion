@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  proxied: true
+
+branding:
+  logo-text: Orion
+
+pages:
+  - name: Orion
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 24h
+          - type: calendar
+            first-day-of-week: monday
+      - size: full
+        widgets: []
+      - size: small
+        widgets: []
+
+  - name: Trackers
+    columns:
+      - size: small
+        widgets: []
+      - size: full
+        widgets: []
+      - size: small
+        widgets: []
+
+  - name: Profilarr
+    columns:
+      - size: small
+        widgets: []
+      - size: full
+        widgets: []
+      - size: small
+        widgets: []

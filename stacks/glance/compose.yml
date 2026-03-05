@@ -1,0 +1,25 @@
+services:
+  glance:
+    image: glanceapp/glance:latest
+    container_name: glance
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - TZ=Australia/Adelaide
+    networks:
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/glanceapp/glance/refs/heads/main/docs/logo.png"
+      net.unraid.docker.webui: "http://glance.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.glance.rule: "Host(`glance.orion`)"
+      traefik.http.services.glance.loadbalancer.server.port: "8080"
+
+networks:
+  gateway:
+    external: true
