@@ -137,6 +137,42 @@ pages:
                 url: http://seerr.orion
                 check-url: http://seerr:5055
                 icon: di:overseerr
+          - type: monitor
+            title: Downloads
+            cache: 1m
+            sites:
+              - title: Qui
+                url: http://qui.orion
+                check-url: http://qui:7476
+                icon: di:qui
+              - title: qBit1
+                url: http://qbit1.orion
+                check-url: http://qbit1:8888
+                icon: di:qbittorrent
+          - type: monitor
+            title: Monitoring
+            cache: 1m
+            sites:
+              - title: Speedtest
+                url: http://speedtest.orion
+                check-url: http://speedtest-tracker:80
+                icon: di:speedtest-tracker
+              - title: Tracearr
+                url: http://tracearr.orion
+                check-url: http://tracearr:3000
+                icon: di:tracearr
+          - type: monitor
+            title: Gateway
+            cache: 1m
+            sites:
+              - title: Traefik
+                url: http://traefik.orion
+                check-url: http://traefik:80
+                icon: di:traefik
+              - title: GL.iNet Flint 2
+                url: http://192.168.8.1
+                check-url: http://192.168.8.1
+                icon: https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f4/49/d1/f449d152-1812-08f4-f5c5-471e5f971db8/AppIcon-0-0-1x_U007emarketing-0-11-0-0-85-220.png/400x400ia-75.webp
 
   - name: Trackers
     columns:
