@@ -6,6 +6,11 @@
   opacity: 1;
 }
 
+.monitor-site-icon {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 .widget-header {
   padding: 0 !important;
   margin-bottom: 0.9rem !important;
