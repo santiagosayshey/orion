@@ -146,7 +146,7 @@ pages:
                 check-url: http://qui:7476
                 icon: di:qui
               - title: qBit1
-                url: http://qbit1.orion
+                url: http://192.168.8.239:8080
                 check-url: http://192.168.8.239:8080
                 icon: di:qbittorrent
           - type: monitor
