@@ -1,0 +1,32 @@
+services:
+  speedtest-tracker:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest-tracker
+    restart: unless-stopped
+    ports:
+      - "6799:80"
+    volumes:
+      - /mnt/user/appdata/speedtest-tracker:/config
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+      - DB_CONNECTION=sqlite
+      - APP_KEY=${APP_KEY}
+      - APP_URL=http://speedtest.orion
+      - SPEEDTEST_SCHEDULE=0 */6 * * *
+      - PUBLIC_DASHBOARD=true
+      - DISPLAY_TIMEZONE=Australia/Adelaide
+    networks:
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/alexjustesen/speedtest-tracker/main/public/img/speedtest-tracker-icon.png"
+      net.unraid.docker.webui: "http://speedtest.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.speedtest.rule: "Host(`speedtest.orion`)"
+      traefik.http.services.speedtest.loadbalancer.server.port: "80"
+
+networks:
+  gateway:
+    external: true
