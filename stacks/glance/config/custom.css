@@ -5,3 +5,7 @@
 .bookmarks-icon {
   opacity: 1;
 }
+
+.widget-header {
+  padding-left: 0;
+}
