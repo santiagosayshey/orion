@@ -1,6 +1,6 @@
 services:
   tracearr:
-    image: ghcr.io/connorgallopo/tracearr:latest
+    image: ghcr.io/connorgallopo/tracearr:supervised
     container_name: tracearr
     restart: unless-stopped
     ports:
