@@ -138,6 +138,30 @@ pages:
                 url: http://immich.orion
                 check-url: http://immich:2283
                 icon: di:immich
+          - type: monitor
+            title: Media Management
+            cache: 1m
+            sites:
+              - title: Radarr
+                url: http://radarr.orion
+                check-url: http://radarr:7878
+                icon: di:radarr
+              - title: Sonarr
+                url: http://sonarr.orion
+                check-url: http://sonarr:8989
+                icon: di:sonarr
+              - title: Prowlarr
+                url: http://prowlarr.orion
+                check-url: http://prowlarr:9696
+                icon: di:prowlarr
+              - title: Profilarr
+                url: http://profilarr.orion
+                check-url: http://profilarr:6868
+                icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png
+              - title: Seerr
+                url: http://seerr.orion
+                check-url: http://seerr:5055
+                icon: di:overseerr
       - size: small
         widgets: []
 
