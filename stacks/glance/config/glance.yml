@@ -156,7 +156,7 @@ pages:
               - title: Speedtest
                 url: http://speedtest.orion
                 check-url: http://speedtest-tracker:80
-                icon: di:speedtest-tracker
+                icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/speedtest-tracker.png
               - title: Tracearr
                 url: http://tracearr.orion
                 check-url: http://tracearr:3000
@@ -167,7 +167,7 @@ pages:
             sites:
               - title: Traefik
                 url: http://traefik.orion
-                check-url: http://traefik:80
+                check-url: http://traefik.orion
                 icon: di:traefik
               - title: GL.iNet Flint 2
                 url: http://192.168.8.1
