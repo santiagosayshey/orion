@@ -113,6 +113,10 @@ pages:
                 url: http://immich.orion
                 check-url: http://immich:2283
                 icon: di:immich
+              - title: Kavita
+                url: http://kavita.orion
+                check-url: http://kavita:5000
+                icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/kavita.png
           - type: monitor
             title: Media Management
             cache: 1m
