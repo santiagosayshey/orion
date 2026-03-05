@@ -177,11 +177,169 @@ pages:
   - name: Trackers
     columns:
       - size: small
-        widgets: []
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Tools
+                links:
+                  - title: The Lounge (IRC)
+                    url: http://thelounge.orion
+                    icon: di:thelounge
+                  - title: Prowlarr
+                    url: http://prowlarr.orion
+                    icon: di:prowlarr
+                  - title: Qui
+                    url: http://qui.orion
+                    icon: di:qui
+                  - title: PreDB
+                    url: https://predb.net
+                    icon: /assets/predb.png
+              - title: Resources
+                links:
+                  - title: TrackerHub
+                    url: https://hdvinnie.github.io/TrackerHub
+                  - title: Tracker status
+                    url: https://trackerstatus.info/
+                  - title: Tracker Spreadsheet
+                    url: https://hdvinnie.github.io/Private-Trackers-Spreadsheet/
+                  - title: r/trackers Wiki
+                    url: https://www.reddit.com/r/trackers/wiki/index
+          - type: rss
+            title: TorrentFreak
+            limit: 10
+            collapse-after: 5
+            feeds:
+              - url: https://torrentfreak.com/feed/
+                title: TorrentFreak
+
       - size: full
-        widgets: []
+        widgets:
+          - type: bookmarks
+            groups:
+              - title: Movies
+                links:
+                  - title: PassThePopcorn
+                    url: https://passthepopcorn.me
+                    icon: /assets/ptp.ico
+                  - title: Anthelion
+                    url: https://anthelion.me
+                    icon: /assets/ant.png
+                  - title: Secret Cinema
+                    url: https://secret-cinema.pw
+                    icon: /assets/sc.png
+                  - title: Cinemageddon
+                    url: http://cinemageddon.net
+                    icon: /assets/cg.ico
+                  - title: Karagarga
+                    url: https://karagarga.in
+                    icon: /assets/kg.ico
+              - title: TV
+                links:
+                  - title: BroadcasTheNet
+                    url: https://broadcasthe.net
+                    icon: /assets/btn.ico
+                  - title: TV Vault
+                    url: https://tv-vault.me
+                    icon: /assets/tvv.ico
+                  - title: MoreThanTV
+                    url: https://www.morethantv.me
+                    icon: /assets/mtv.png
+                  - title: Nebulance
+                    url: https://nebulance.io
+                    icon: /assets/nbl.png
+              - title: HD
+                links:
+                  - title: BeyondHD
+                    url: https://beyond-hd.me
+                    icon: /assets/bhd.png
+                  - title: HDBits
+                    url: https://hdbits.org
+                    icon: /assets/hdb.png
+                  - title: Blutopia
+                    url: https://blutopia.cc
+                    icon: /assets/blu.png
+                  - title: Hawke-Uno
+                    url: https://hawke.uno
+                    icon: /assets/hawke.png
+                  - title: Aither
+                    url: https://aither.cc
+                    icon: /assets/aither.ico
+                  - title: UHDBits
+                    url: https://uhdbits.org
+                    icon: /assets/uhd.ico
+                  - title: ReelFLiX
+                    url: https://reelflix.xyz
+                    icon: /assets/reelflix.png
+                  - title: GreatPosterWall
+                    url: https://greatposterwall.com
+                    icon: /assets/gpw.ico
+                  - title: FearNoPeer
+                    url: https://fearnopeer.com
+                    icon: /assets/fnp.png
+              - title: Music
+                links:
+                  - title: Redacted
+                    url: https://redacted.sh
+                    icon: /assets/red.png
+                  - title: Orpheus
+                    url: https://orpheus.network
+                    icon: /assets/ops.ico
+                  - title: Concertos
+                    url: https://concertos.live
+                    icon: /assets/concertos.png
+              - title: Games
+                links:
+                  - title: GazelleGames
+                    url: https://www.gazellegames.net
+                    icon: /assets/ggn.ico
+              - title: Sports
+                links:
+                  - title: SportsCult
+                    url: https://sportscult.org
+                    icon: /assets/sportscult.ico
+              - title: Books
+                links:
+                  - title: MyAnonamouse
+                    url: https://www.myanonamouse.net
+                    icon: /assets/mam.png
+              - title: Anime
+                links:
+                  - title: AnimeBytes
+                    url: https://animebytes.tv
+                    icon: /assets/ab.ico
+                  - title: BakaBT
+                    url: https://bakabt.me
+                    icon: /assets/bbt.png
+                  - title: Nyaa
+                    url: https://nyaa.land
+                    icon: /assets/nyaa.png
+              - title: Porn
+                links:
+                  - title: Empornium
+                    url: https://www.empornium.is
+                    icon: /assets/emp.ico
+              - title: General
+                links:
+                  - title: FileList
+                    url: https://filelist.io
+                    icon: /assets/fl.ico
+                  - title: IPTorrents
+                    url: https://ipt.lol
+                    icon: /assets/ipt.ico
+                  - title: TorrentLeech
+                    url: https://www.torrentleech.me
+                    icon: /assets/tl.png
+
       - size: small
-        widgets: []
+        widgets:
+          - type: reddit
+            subreddit: trackers
+            limit: 15
+            collapse-after: 5
+          - type: reddit
+            subreddit: OpenSignups
+            limit: 10
+            collapse-after: 5
 
   - name: Profilarr
     columns:

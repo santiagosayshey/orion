@@ -1,0 +1,24 @@
+services:
+  thelounge:
+    image: ghcr.io/thelounge/thelounge:latest
+    container_name: thelounge
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - /mnt/user/appdata/thelounge:/var/opt/thelounge
+    environment:
+      - TZ=Australia/Adelaide
+    networks:
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/thelounge.png"
+      net.unraid.docker.webui: "http://thelounge.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.thelounge.rule: "Host(`thelounge.orion`)"
+      traefik.http.services.thelounge.loadbalancer.server.port: "9000"
+
+networks:
+  gateway:
+    external: true
