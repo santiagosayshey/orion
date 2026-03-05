@@ -7,9 +7,6 @@
 }
 
 .widget-header {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  margin: 0 !important;
+  padding: 0 !important;
+  margin-bottom: 0.9rem !important;
 }
