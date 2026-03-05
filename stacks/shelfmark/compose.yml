@@ -1,0 +1,30 @@
+services:
+  shelfmark:
+    image: ghcr.io/calibrain/shelfmark:latest
+    container_name: shelfmark
+    restart: unless-stopped
+    ports:
+      - "8084:8084"
+    volumes:
+      - /mnt/user/appdata/shelfmark:/config
+      - /mnt/user/media:/media
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Australia/Adelaide
+    networks:
+      - media
+      - gateway
+    labels:
+      net.unraid.docker.icon: "https://raw.githubusercontent.com/calibrain/shelfmark/main/src/frontend/public/logo.png"
+      net.unraid.docker.webui: "http://shelfmark.orion"
+      traefik.enable: "true"
+      traefik.docker.network: "gateway"
+      traefik.http.routers.shelfmark.rule: "Host(`shelfmark.orion`)"
+      traefik.http.services.shelfmark.loadbalancer.server.port: "8084"
+
+networks:
+  media:
+    external: true
+  gateway:
+    external: true

@@ -100,7 +100,7 @@ pages:
       - size: full
         widgets:
           - type: monitor
-            title: Services
+            title: Media Server
             cache: 1m
             sites:
               - title: Plex
@@ -141,6 +141,10 @@ pages:
                 url: http://seerr.orion
                 check-url: http://seerr:5055
                 icon: di:overseerr
+              - title: Shelfmark
+                url: http://shelfmark.orion
+                check-url: http://shelfmark:8084/api/health
+                icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/shelfmark.png
           - type: monitor
             title: Downloads
             cache: 1m
