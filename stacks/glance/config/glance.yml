@@ -7,7 +7,7 @@ theme:
   custom-css-file: /app/config/custom.css
   background-color: 220 17 17
   primary-color: 213 32 52
-  positive-color: 145 63 42
+  positive-color: 193 70 60
   negative-color: 354 42 56
   contrast-multiplier: 1.1
   presets:
