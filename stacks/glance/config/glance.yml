@@ -21,7 +21,7 @@ pages:
             first-day-of-week: monday
           - type: custom-api
             cache: 1h
-            title: Internet Speed
+            title: Speedtest
             title-url: http://speedtest.orion
             url: http://speedtest-tracker/api/v1/results/latest
             headers:
@@ -137,8 +137,6 @@ pages:
                 url: http://seerr.orion
                 check-url: http://seerr:5055
                 icon: di:overseerr
-      - size: small
-        widgets: []
 
   - name: Trackers
     columns:
