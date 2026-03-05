@@ -3,7 +3,7 @@ server:
   proxied: true
 
 branding:
-  logo-text: Orion
+  logo-text: Glance
 
 pages:
   - name: Orion
@@ -93,7 +93,19 @@ pages:
               </div>
               </div>
       - size: full
-        widgets: []
+        widgets:
+          - type: monitor
+            title: Services
+            cache: 1m
+            sites:
+              - title: Plex
+                url: http://plex.orion
+                check-url: http://192.168.8.219:32400/web
+                icon: di:plex
+              - title: Immich
+                url: http://immich.orion
+                check-url: http://immich:2283
+                icon: di:immich
       - size: small
         widgets: []
 
