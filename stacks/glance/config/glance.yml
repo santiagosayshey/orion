@@ -5,35 +5,10 @@ server:
 
 theme:
   custom-css-file: /assets/custom.css
-  background-color: 220 17 17
-  primary-color: 213 32 52
-  positive-color: 193 70 60
+  primary-color: 193 70 60
   negative-color: 354 42 56
   contrast-multiplier: 1.1
-  presets:
-    catppuccin-mocha:
-      background-color: 240 21 15
-      primary-color: 217 92 83
-      positive-color: 115 54 76
-      negative-color: 347 70 65
-      contrast-multiplier: 1.2
-    gruvbox-dark:
-      background-color: 0 0 16
-      primary-color: 43 59 81
-      positive-color: 61 66 44
-      negative-color: 6 96 59
-    dracula:
-      background-color: 231 15 21
-      primary-color: 265 89 79
-      positive-color: 135 94 66
-      negative-color: 0 100 67
-      contrast-multiplier: 1.2
-    catppuccin-latte:
-      light: true
-      background-color: 220 23 95
-      primary-color: 220 91 54
-      positive-color: 109 58 40
-      negative-color: 347 87 44
+  disable-picker: true
 
 pages:
   - name: Orion
@@ -157,7 +132,7 @@ pages:
               - title: Profilarr
                 url: http://profilarr.orion
                 check-url: http://profilarr:6868
-                icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/v2/src/lib/client/assets/logo-512.png
+                icon: https://raw.githubusercontent.com/Dictionarry-Hub/profilarr/refs/heads/develop/src/lib/client/assets/logo-512.png
               - title: Seerr
                 url: http://seerr.orion
                 check-url: http://seerr:5055
